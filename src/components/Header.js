@@ -1,7 +1,7 @@
 const Header = () => {
     return (
         <div>
-            This is Header
+            KORDLE
         </div>
     );
 };
