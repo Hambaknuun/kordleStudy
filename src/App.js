@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import "./App.css";
 import Main from "./pages/Main";
-import { getVocabByDate, createGameState } from "./utils/vocab";
+import { getVocabByDate, checkAndCreateGameState } from "./utils/vocab";
 
 function App() {
   const todayAnswer = getVocabByDate(new Date());
@@ -11,10 +11,7 @@ function App() {
   }, [todayAnswer]);
 
   useEffect(() => {
-    // 게임 최초 접속인 경우
-    if (!localStorage.getItem("gameState")) {
-      createGameState();
-    }
+    checkAndCreateGameState();
   }, []);
 
   return (

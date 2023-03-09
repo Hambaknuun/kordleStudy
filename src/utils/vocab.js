@@ -1,3 +1,5 @@
+import * as Hangul from "hangul-js";
+
 const VOCAB = [
   "공짜",
   "등산",
@@ -19,13 +21,30 @@ export const getVocabByDate = (date) => {
 
   const index = dateStr % VOCAB.length;
 
+  // const vocabArr = Hangul.disassemble(VOCAB[index]);
   return VOCAB[index];
 };
 
-// Create New Game State (Local Storage)
-export const createGameState = () => {
-  const solution = [];
+// checkGameState
+export const checkAndCreateGameState = () => {
+  let createFlag = false;
+  if (!localStorage.getItem("gameState")) {
+    // 1. 게임 최초 접속인 경우
+    createFlag = true;
+  } else {
+    const curGameState = JSON.parse(localStorage.getItem("gameState"));
+    const curSolution = Hangul.assemble(curGameState.solution);
+    // 2. 문제 갱신이 필요한 경우
+    if (curSolution !== getVocabByDate(new Date())) createFlag = true;
+  }
 
+  if (createFlag) createGameState(getVocabByDate(new Date()));
+};
+
+// Create New Game State (Local Storage)
+export const createGameState = (todayVocab) => {
+  const solution = Hangul.disassemble(todayVocab);
   const newGameState = { guesses: [], solution: solution };
+
   localStorage.setItem("gameState", JSON.stringify(newGameState));
 };
