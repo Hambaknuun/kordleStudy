@@ -4,7 +4,7 @@ import Keyboard from "../components/Keyboard";
 
 const Main = () => {
     return (
-        <div>
+        <div className="playBoard">
             <Header />
             <Input />
             <Keyboard />

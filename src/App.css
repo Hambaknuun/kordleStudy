@@ -1,13 +1,28 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
-@font-face { /* 애플산돌고딕 폰트 적용 */
+
+@font-face {
+  /* 애플산돌고딕 폰트 적용 */
   font-family: "chab";
   src: url("/public/font/chab.ttf") format("truetype");
   font-weight: normal;
 }
 
-.App {
-  text-align: center;
+/* reset */
+div,
+a,
+span,
+menu,
+ul,
+li,
+h1,
+h2,
+h3,
+article {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
 }
+
 
 .App-logo {
   height: 40vmin;
@@ -18,3 +33,73 @@ div {
   font-family: 'Noto Sans KR', sans-serif;
   font-size: 50px;
 }
+
+#root {
+  display: inline-block;
+  width: 100%;
+}
+
+.App {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+}
+
+/* 헤더 */
+.header {
+  display: inline-flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.header .ttl {
+  display: inline-block;
+  margin-left: 10px;
+  font-size: 20px;
+}
+
+.header .menuLst {
+  display: inline-flex;
+  margin-right: 10px;
+}
+
+.header .menuLst .menu {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  margin-left: 2px;
+  font-size: 23px;
+}
+
+.header .menuLst .icon {
+  background-size: 26px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.icon.create {
+  background-image: url(/public/img/test.png);
+}
+
+.icon.setting {
+  background-image: url(/public/img/setting.png);
+}
+
+.icon.question {
+  background-image: url(/public/img/question.png);
+}
+
+.icon.chart {
+  background-image: url(/public/img/chart.png);
+}
+
+/* 입력란 */
+.playBoard {
+  display: inline-block;
+  width: 100%;
+  max-width: 450px;
+  text-align: center;
+  background-color: #eee;
+}
+
+/* 키보드 */
