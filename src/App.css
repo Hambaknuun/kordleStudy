@@ -69,6 +69,7 @@ div {
   height: 32px;
   margin-left: 2px;
   font-size: 23px;
+  cursor: pointer;
 }
 
 .header .menuLst .icon {
