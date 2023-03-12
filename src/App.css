@@ -23,6 +23,7 @@ article {
   padding: 0;
 }
 
+.dpNon{display: none;}
 
 .App-logo {
   height: 40vmin;
