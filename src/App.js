@@ -30,7 +30,7 @@ function App() {
     checkAndCreateGameState();
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
-    };
+    }
   }, []);
 
   return (

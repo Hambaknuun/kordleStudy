@@ -23,7 +23,9 @@ article {
   padding: 0;
 }
 
-.dpNon{display: none;}
+.dpNon {
+  display: none;
+}
 
 .App-logo {
   height: 40vmin;
@@ -44,6 +46,14 @@ div {
   display: inline-block;
   width: 100%;
   text-align: center;
+}
+
+.playBoard {
+  display: inline-block;
+  width: 100%;
+  max-width: 450px;
+  text-align: center;
+  background-color: #eee;
 }
 
 /* 헤더 */
@@ -95,13 +105,27 @@ div {
   background-image: url(/public/img/chart.png);
 }
 
+
 /* 입력란 */
-.playBoard {
+.inputBx {
   display: inline-block;
   width: 100%;
-  max-width: 450px;
-  text-align: center;
-  background-color: #eee;
+}
+
+.charBx {
+  display: inline-block;
+  width: 100%;
+  background-color: #ff9393;
+}
+
+.charBxItem {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  border: 2px solid #000;
+  border-radius: 5px;
+  font-size: 30px;
+  margin-left: 3px;
 }
 
 /* 키보드 */
