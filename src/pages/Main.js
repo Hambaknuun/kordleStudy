@@ -2,11 +2,11 @@ import Header from "../components/Header";
 import Input from "../components/Input";
 import Keyboard from "../components/Keyboard";
 
-const Main = ({ userInput }) => {
+const Main = ({ guess }) => {
   return (
     <div className="playBoard">
       <Header />
-      <Input userInput={userInput} />
+      <Input guess={guess} />
       <Keyboard />
     </div>
   );

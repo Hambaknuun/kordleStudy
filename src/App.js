@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import "./App.css";
 import Main from "./pages/Main";
 import {
@@ -10,17 +10,44 @@ import {
 function App() {
   const todayAnswer = getVocabByDate(new Date());
   const [userInput, setUserInput] = useState();
+  const [guess, setGuess] = useState([]);
 
   const handleKeyDown = (event) => {
     console.log(event.key + " key was pressed!");
 
-    if (convertKeyToHangul(event.key))
-      setUserInput(convertKeyToHangul(event.key));
+    if (convertKeyToHangul(event.key)){
+      onChangeUserInput(convertKeyToHangul(event.key));
+    }
   };
+  
+  const onChangeUserInput = useCallback(
+    (key) => {
+      if (!key) return;
+      else if (key === "Backspace")
+        setGuess(prev =>
+          [...prev].filter((it, idx) => {
+            return idx !== prev.length - 1 ? true : false;
+          })
+        );
+      else if (key === "Enter") alert("Enter!");
+      else {
+        setGuess(prev => {
+          return prev.length !== 6 ? [...prev, key] : [...prev];
+        });
+      }
+  
+    },
+    [guess]
+  );
 
   useEffect(() => {
     console.log(todayAnswer);
   }, [todayAnswer]);
+
+  useEffect(() => {
+    console.log(guess);
+  }, [guess]);
+
 
   useEffect(() => {
     document.addEventListener("keydown", handleKeyDown);
@@ -32,7 +59,7 @@ function App() {
 
   return (
     <div className="App">
-      <Main userInput={userInput} />
+      <Main guess={guess} />
     </div>
   );
 }

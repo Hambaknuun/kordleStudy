@@ -5,29 +5,7 @@ const CharBox = ({ idx, val, onChange }) => {
   return <div className="charBx">{val}</div>;
 };
 
-const Input = ({ userInput }) => {
-  const [guess, setGuess] = useState([]);
-
-  const onChangeUserInput = useCallback(
-    (key) => {
-      if (!key) return;
-      else if (key === "Backspace")
-        setGuess(
-          [...guess].filter((it, idx) => {
-            return idx !== guess.length - 1 ? true : false;
-          })
-        );
-      else if (key === "Enter") alert("Enter!");
-      else if (guess.length !== 6) setGuess([...guess, key]);
-
-      console.log(guess);
-    },
-    [guess]
-  );
-
-  useEffect(() => {
-    onChangeUserInput(userInput);
-  }, [userInput]);
+const Input = ({ guess }) => {
 
   return (
     <div>
