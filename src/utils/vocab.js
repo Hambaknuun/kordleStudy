@@ -48,3 +48,67 @@ export const createGameState = (todayVocab) => {
 
   localStorage.setItem("gameState", JSON.stringify(newGameState));
 };
+
+export const convertKeyToHangul = (key) => {
+  // key 값에 따라 한글로 변환
+  switch (key) {
+    case "a":
+      return "ㅁ";
+    case "b":
+      return "ㅠ";
+    case "c":
+      return "ㅊ";
+    case "d":
+      return "ㅇ";
+    case "e":
+      return "ㄷ";
+    case "f":
+      return "ㄹ";
+    case "g":
+      return "ㅎ";
+    case "h":
+      return "ㅗ";
+    case "i":
+      return "ㅑ";
+    case "j":
+      return "ㅓ";
+    case "k":
+      return "ㅏ";
+    case "l":
+      return "ㅣ";
+    case "m":
+      return "ㅡ";
+    case "n":
+      return "ㅜ";
+    case "o":
+      return "";
+    case "p":
+      return "";
+    case "q":
+      return "ㅂ";
+    case "r":
+      return "ㄱ";
+    case "s":
+      return "ㄴ";
+    case "t":
+      return "ㅅ";
+    case "u":
+      return "ㅕ";
+    case "v":
+      return "ㅍ";
+    case "w":
+      return "ㅈ";
+    case "x":
+      return "ㅌ";
+    case "y":
+      return "ㅛ";
+    case "z":
+      return "ㅋ";
+    case "Backspace":
+      return "Backspace";
+    case "Enter":
+      return "Enter";
+    default:
+      return "";
+  }
+};
