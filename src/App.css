@@ -61,6 +61,7 @@ div {
   display: inline-flex;
   width: 100%;
   justify-content: space-between;
+  margin-bottom: 25px;
 }
 
 .header .ttl {
@@ -113,12 +114,15 @@ div {
 }
 
 .charBx {
-  display: inline-block;
+  float: left;
+  display: inline-flex;
   width: 100%;
-  background-color: #ff9393;
+  justify-content: center;
+  align-items: center;
 }
 
 .charBxItem {
+  float: left;
   display: inline-block;
   width: 40px;
   height: 40px;
