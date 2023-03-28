@@ -21,8 +21,8 @@ export const getVocabByDate = (date) => {
 
   const index = dateStr % VOCAB.length;
 
-  // const vocabArr = Hangul.disassemble(VOCAB[index]);
-  return VOCAB[index];
+  const vocabArr = Hangul.disassemble(VOCAB[index]);
+  return vocabArr;
 };
 
 // checkGameState
@@ -47,6 +47,25 @@ export const createGameState = (todayVocab) => {
   const newGameState = { guesses: [], solution: solution };
 
   localStorage.setItem("gameState", JSON.stringify(newGameState));
+};
+
+export const enterGuess = (guess, todayAnswer) => {
+  if (!guess || guess.length < 6) return { type: "NOT_ENOUGH" };
+
+  let isCorrect = true;
+  const result = guess.map((it, idx) => {
+    if (it === todayAnswer[idx]) return { char: it, type: "CORRECT" };
+    else if (todayAnswer.includes(it)) {
+      isCorrect = false;
+      return { char: it, color: "MISPLACE" };
+    } else {
+      isCorrect = false;
+      return { char: it, color: "WRONG" };
+    }
+  });
+
+  if (isCorrect) return { type: "CORRECT", result: result };
+  else return { type: "WRONG", result: result };
 };
 
 export const convertKeyToHangul = (key) => {
