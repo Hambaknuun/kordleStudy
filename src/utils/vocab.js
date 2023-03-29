@@ -54,13 +54,13 @@ export const enterGuess = (guess, todayAnswer) => {
 
   let isCorrect = true;
   const result = guess.map((it, idx) => {
-    if (it === todayAnswer[idx]) return { char: it, type: "CORRECT" };
+    if (it === todayAnswer[idx]) return { value: it, status: "correct" };
     else if (todayAnswer.includes(it)) {
       isCorrect = false;
-      return { char: it, color: "MISPLACE" };
+      return { value: it, status: "present" };
     } else {
       isCorrect = false;
-      return { char: it, color: "WRONG" };
+      return { value: it, status: "absent" };
     }
   });
 
