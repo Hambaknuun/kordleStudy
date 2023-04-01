@@ -1,5 +1,7 @@
 const CharBox = ({ idx, val, onChange }) => {
-  return <div className="charBxItem">{val}</div>;
+  return <div className={[
+    "charItem", val ? "active" : ""
+  ].join(" ")}>{val}</div>;
 };
 
 const Input = ({ guess, status }) => {
@@ -33,7 +35,7 @@ const Input = ({ guess, status }) => {
   }
 
   return (
-    <div className="charBx">
+    <div className="inputLine">
       {/* {guess.map((it, idx) => {
         return <CharBox key={idx} idx={idx} val={it} />;
       })} */}

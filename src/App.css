@@ -33,7 +33,6 @@ article {
 }
 
 div {
-  font-family: 'Noto Sans KR', sans-serif;
   font-size: 50px;
 }
 
@@ -53,7 +52,6 @@ div {
   width: 100%;
   max-width: 450px;
   text-align: center;
-  background-color: #eee;
 }
 
 /* 헤더 */
@@ -113,25 +111,54 @@ div {
   width: 100%;
 }
 
-.charBx {
+.inputLine {
   float: left;
   display: inline-flex;
   width: 100%;
   justify-content: center;
   align-items: center;
+  margin-top: 3.5px;
 }
 
-.charBxItem {
+.charItem {
+  font-family: "swap";
+  font-weight: bold;
   float: left;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 47px;
+  height: 47px;
+  border: 2px solid #e2e8f0;
+  border-radius: 4px;
+  font-size: 25px;
+  margin-left: 3.5px;
+}
+
+.charItem:first-of-type {
+  margin-left: 0;
+}
+
+.charItem.active {
   border: 2px solid #000;
-  border-radius: 5px;
-  font-size: 30px;
-  margin-left: 3px;
+}
+
+.charItem.correct {
+  color: #fff;
+  background-color: #22c55e;
+  border: 2px solid #22c55e;
+}
+
+.charItem.present {
+  color: #fff;
+  background-color: #eab308;
+  border: 2px solid #eab308;
+}
+
+.charItem.absent {
+  color: #fff;
+  background-color: #94a3b8;
+  border: 2px solid #94a3b8;
 }
 
 /* 키보드 */
