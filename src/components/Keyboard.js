@@ -1,8 +1,15 @@
-const Keyboard = () => {
+const Keyboard = ({ handleKeyboardClick }) => {
     return (
-        <div>
-            This is Keyboard
-        </div>
+        <article className="keyboard">
+            <section>
+                <button
+                    className="keyboardBtn"
+                    onClick={() => handleKeyboardClick("ㅂ")}
+                >
+                    ㅂ
+                </button>
+            </section>
+        </article>
     );
 };
 
