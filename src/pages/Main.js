@@ -41,10 +41,12 @@ const Main = ({ todayAnswer }) => {
             case "WRONG":
                 alert("틀렸습니다! 다시 시도 해보세요");
                 setGuesses((prev) => [...prev, currentGuess]);
+                setCurrentGuess([]);
                 break;
             case "CORRECT":
                 alert("정답입니다! 축하드립니다!");
                 setGuesses((prev) => [...prev, currentGuess]);
+                setCurrentGuess([]);
                 break;
             default:
                 break;
@@ -76,7 +78,6 @@ const Main = ({ todayAnswer }) => {
     }, [currentGuess]);
     useEffect(() => {
         console.log("guesses", guesses);
-        setCurrentGuess([]);
     }, [guesses]);
 
     useEffect(() => {
