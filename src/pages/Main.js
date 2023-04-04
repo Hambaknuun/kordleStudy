@@ -23,11 +23,7 @@ const Main = ({ todayAnswer }) => {
                     })
                 );
             else if (key === "Enter") {
-                setGuesses((prev) => [...prev, currentGuess]);
-                setCurrentGuess([]);
-                // const guessResult = enterGuess(currentGuess, todayAnswer);
-                // console.log("Enter!", guessResult);
-                // handleGuessResult(currentGuess);
+                handleEnterGuess(enterGuess(currentGuess));
             } else {
                 setCurrentGuess((prev) => {
                     return prev.length !== 6 ? [...prev, key] : [...prev];
@@ -36,6 +32,24 @@ const Main = ({ todayAnswer }) => {
         },
         [currentGuess, todayAnswer]
     );
+
+    const handleEnterGuess = (resultType) => {
+        switch (resultType) {
+            case "NOT_ENOUGH":
+                alert("음운이 부족합니다.");
+                break;
+            case "WRONG":
+                alert("틀렸습니다! 다시 시도 해보세요");
+                setGuesses((prev) => [...prev, currentGuess]);
+                break;
+            case "CORRECT":
+                alert("정답입니다! 축하드립니다!");
+                setGuesses((prev) => [...prev, currentGuess]);
+                break;
+            default:
+                break;
+        }
+    };
 
     const handleKeyUp = useCallback(
         (event) => {
@@ -58,16 +72,23 @@ const Main = ({ todayAnswer }) => {
     );
 
     useEffect(() => {
-        console.log("guess", currentGuess);
+        console.log("currentGuess", currentGuess);
     }, [currentGuess]);
+    useEffect(() => {
+        console.log("guesses", guesses);
+        setCurrentGuess([]);
+    }, [guesses]);
 
     useEffect(() => {
         document.addEventListener("keyup", handleKeyUp);
-        checkAndCreateGameState();
         return () => {
             document.removeEventListener("keyup", handleKeyUp);
         };
     }, [handleKeyUp]);
+
+    useEffect(() => {
+        checkAndCreateGameState();
+    }, []);
 
     const rendering = () => {
         const result = [];

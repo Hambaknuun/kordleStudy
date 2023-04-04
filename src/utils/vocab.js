@@ -49,8 +49,29 @@ export const createGameState = (todayVocab) => {
   localStorage.setItem("gameState", JSON.stringify(newGameState));
 };
 
-export const enterGuess = (guess, todayAnswer) => {
-  if (!guess || guess.length < 6) return { type: "NOT_ENOUGH" };
+const getLocalGameState = () => {
+  const localGameState = JSON.parse(localStorage.getItem("gameState"));
+
+  if(!localGameState) return null;
+  return localGameState;
+}
+
+export const enterGuess = (guess) => {
+  if (!guess || guess.length < 6) return "NOT_ENOUGH";
+  
+  let resultType = "CORRECT";
+  const localGameState = getLocalGameState();
+  const todayAnswer = localGameState ? localGameState.solution : getVocabByDate(new Date());
+  guess.map((it, idx) => {
+    if (it !== todayAnswer[idx]) resultType = "WRONG";
+  });
+
+  return resultType;
+};
+
+export const getGuessResult = (guess) => {
+  const localGameState = getLocalGameState();
+  const todayAnswer = localGameState ? localGameState.solution : getVocabByDate(new Date());
 
   let isCorrect = true;
   const result = guess.map((it, idx) => {
@@ -64,8 +85,7 @@ export const enterGuess = (guess, todayAnswer) => {
     }
   });
 
-  if (isCorrect) return { type: "CORRECT", result: result };
-  else return { type: "WRONG", result: result };
+  return result;
 };
 
 export const convertKeyToHangul = (key) => {
