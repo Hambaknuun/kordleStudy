@@ -196,3 +196,18 @@ div {
   background-color: #e2e8f0;
   cursor: pointer;
 }
+
+.keyboardFuncBtn{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 65px;
+  height: 58px;
+  margin: 2px;
+  font-weight: 700;
+  font-size: 18px;
+  border: none;
+  border-radius: 3px;
+  background-color: #e2e8f0;
+  cursor: pointer;
+}

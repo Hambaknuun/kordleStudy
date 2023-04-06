@@ -107,7 +107,7 @@ const Main = ({ todayAnswer }) => {
             })}
             <Input guess={currentGuess} status={"current"} />
             {rendering()}
-            <Keyboard handleKeyboardClick={handleKeyboardClick} />
+            <Keyboard handleKeyboardClick={handleKeyboardClick} onChangeUserInput={onChangeUserInput} />
         </div>
     );
 };
