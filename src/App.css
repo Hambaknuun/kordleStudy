@@ -133,6 +133,7 @@ div {
   border-radius: 4px;
   font-size: 24px;
   margin-left: 3.5px;
+  transition: 0.3s;
 }
 
 .charItem:first-of-type {
@@ -143,19 +144,19 @@ div {
   border: 2px solid #000;
 }
 
-.charItem.correct {
+.charItem.correct, .keyboardBtn.correct {
   color: #fff;
   background-color: #22c55e;
   border: 2px solid #22c55e;
 }
 
-.charItem.present {
+.charItem.present, .keyboardBtn.present {
   color: #fff;
   background-color: #eab308;
   border: 2px solid #eab308;
 }
 
-.charItem.absent {
+.charItem.absent, .keyboardBtn.absent {
   color: #fff;
   background-color: #94a3b8;
   border: 2px solid #94a3b8;
@@ -167,6 +168,31 @@ div {
 }
 
 /* 키보드 */
-.keyboard {}
+.keyboard{
+  float: left;
+  display: inline-block;
+  text-align: center;
+  margin-top: 24px;
+}
 
-.keyboard .keyboardBtn {}
+.keyboardLine {
+  display: inline-flex;
+  width: 100%;
+  float: left;
+  justify-content: center;
+}
+
+.keyboardBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 58px;
+  margin: 2px;
+  font-weight: 700;
+  font-size: 18px;
+  border: none;
+  border-radius: 3px;
+  background-color: #e2e8f0;
+  cursor: pointer;
+}
