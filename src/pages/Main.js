@@ -11,7 +11,14 @@ import {
 const Main = ({ todayAnswer }) => {
     const maxTrialCount = 6;
     const [currentGuess, setCurrentGuess] = useState([]);
-    const [guesses, setGuesses] = useState([]);
+    let localGameState = JSON.parse(localStorage.getItem("gameState"))
+        ? JSON.parse(localStorage.getItem("gameState"))
+        : null;
+    let localGuesses = localGameState?.guesses;
+    if (!localGuesses) {
+        checkAndCreateGameState();
+    }
+    const [guesses, setGuesses] = useState(localGuesses);
 
     const onChangeUserInput = useCallback(
         (key) => {
@@ -76,8 +83,11 @@ const Main = ({ todayAnswer }) => {
     useEffect(() => {
         console.log("currentGuess", currentGuess);
     }, [currentGuess]);
+
     useEffect(() => {
         console.log("guesses", guesses);
+        localGameState.guesses = guesses;
+        localStorage.setItem("gameState", JSON.stringify(localGameState));
     }, [guesses]);
 
     useEffect(() => {
@@ -107,7 +117,10 @@ const Main = ({ todayAnswer }) => {
             })}
             <Input guess={currentGuess} status={"current"} />
             {rendering()}
-            <Keyboard handleKeyboardClick={handleKeyboardClick} onChangeUserInput={onChangeUserInput} />
+            <Keyboard
+                handleKeyboardClick={handleKeyboardClick}
+                onChangeUserInput={onChangeUserInput}
+            />
         </div>
     );
 };
