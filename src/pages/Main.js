@@ -11,14 +11,30 @@ import {
 const Main = ({ todayAnswer }) => {
     const maxTrialCount = 6;
     const [currentGuess, setCurrentGuess] = useState([]);
+    const [isCorrect, setIsCorrect] = useState(false);
+    const [EZMode, setEZMode] = useState(false);
+
     let localGameState = JSON.parse(localStorage.getItem("gameState"))
         ? JSON.parse(localStorage.getItem("gameState"))
-        : null;
+        : [];
     let localGuesses = localGameState?.guesses;
     if (!localGuesses) {
         checkAndCreateGameState();
     }
+    // TODO: 현재 최초 접속시 cannot read undefined 오류 발생 --> 수정 필요
     const [guesses, setGuesses] = useState(localGuesses);
+
+    useEffect(() => {
+        if(guesses){
+            const resultType = enterGuess(guesses.at(-1));
+            if(resultType === "CORRECT" ){
+                handleGuessResultMsg(resultType);
+                setIsCorrect(true);
+            }
+
+        }
+        
+    }, []);
 
     const onChangeUserInput = useCallback(
         (key) => {
@@ -30,7 +46,12 @@ const Main = ({ todayAnswer }) => {
                     })
                 );
             else if (key === "Enter") {
-                handleEnterGuess(enterGuess(currentGuess));
+                const guessResult = enterGuess(currentGuess);
+                if(guessResult !== "NOT_ENOUGH"){
+                    setGuesses((prev) => [...prev, currentGuess]);
+                    setCurrentGuess([]);
+                }
+                handleGuessResultMsg(guessResult);
             } else {
                 setCurrentGuess((prev) => {
                     return prev.length !== 6 ? [...prev, key] : [...prev];
@@ -40,20 +61,19 @@ const Main = ({ todayAnswer }) => {
         [currentGuess, todayAnswer]
     );
 
-    const handleEnterGuess = (resultType) => {
+    const handleGuessResultMsg = (resultType) => {
         switch (resultType) {
             case "NOT_ENOUGH":
                 alert("음운이 부족합니다.");
                 break;
             case "WRONG":
                 alert("틀렸습니다! 다시 시도 해보세요");
-                setGuesses((prev) => [...prev, currentGuess]);
-                setCurrentGuess([]);
+                if(EZMode)
+                    setGuesses((prev) => (prev.length>=6)?[...prev.splice(1)] :[...prev]);
                 break;
             case "CORRECT":
                 alert("정답입니다! 축하드립니다!");
-                setGuesses((prev) => [...prev, currentGuess]);
-                setCurrentGuess([]);
+                setIsCorrect(true);
                 break;
             default:
                 break;
@@ -92,17 +112,22 @@ const Main = ({ todayAnswer }) => {
 
     useEffect(() => {
         document.addEventListener("keyup", handleKeyUp);
+        if(isCorrect) document.removeEventListener("keyup", handleKeyUp);
         return () => {
             document.removeEventListener("keyup", handleKeyUp);
         };
-    }, [handleKeyUp]);
+    }, [handleKeyUp,isCorrect]);
 
-    useEffect(() => {
-        checkAndCreateGameState();
-    }, []);
 
-    const rendering = () => {
+    const inputs = () => {
         const result = [];
+        guesses.map((it) => {
+            result.push(<Input guess={it} status={"past"} />);
+        });
+        // EZ모드 Validation 추가
+        if(EZMode || guesses.length < 6)
+            result.push(<Input guess={currentGuess} status={"current"} />);
+
         for (let i = 1; i < maxTrialCount - guesses.length; i++) {
             result.push(<Input guess={[]} status={"future"} />);
         }
@@ -111,12 +136,8 @@ const Main = ({ todayAnswer }) => {
 
     return (
         <div className="playBoard">
-            <Header />
-            {guesses.map((it) => {
-                return <Input guess={it} status={"past"} />;
-            })}
-            <Input guess={currentGuess} status={"current"} />
-            {rendering()}
+            <Header toggleEZMode={() => setEZMode(prev => !prev)}/>
+            {inputs()}
             <Keyboard
                 handleKeyboardClick={handleKeyboardClick}
                 onChangeUserInput={onChangeUserInput}

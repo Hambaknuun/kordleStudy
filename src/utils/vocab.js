@@ -87,14 +87,11 @@ export const getGuessResult = (guess) => {
         ? localGameState.solution
         : getVocabByDate(new Date());
 
-    let isCorrect = true;
     const result = guess.map((it, idx) => {
         if (it === todayAnswer[idx]) return { value: it, status: "correct" };
         else if (todayAnswer.includes(it)) {
-            isCorrect = false;
             return { value: it, status: "present" };
         } else {
-            isCorrect = false;
             return { value: it, status: "absent" };
         }
     });

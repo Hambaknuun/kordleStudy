@@ -1,6 +1,6 @@
 import "./App.css";
 import Main from "./pages/Main";
-import { getVocabByDate } from "./utils/vocab";
+import { getVocabByDate,checkAndCreateGameState } from "./utils/vocab";
 import { useEffect } from "react";
 
 function App() {
@@ -9,6 +9,10 @@ function App() {
   useEffect(() => {
     console.log("todayAnswer", todayAnswer);
   }, [todayAnswer]);
+  
+  useEffect(() => {
+    checkAndCreateGameState();
+  }, []);
 
   return (
     <div className="App">
