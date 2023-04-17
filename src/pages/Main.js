@@ -94,7 +94,7 @@ const Main = ({ todayAnswer }) => {
     const handleKeyboardClick = useCallback(
         (event) => {
             console.log(event + " keyboard Click!");
-
+            if (isCorrect) return;
             onChangeUserInput(event);
         },
         [onChangeUserInput]
