@@ -139,7 +139,10 @@ const Main = ({ todayAnswer }) => {
 
     return (
         <div className="playBoard">
-            <Header toggleEZMode={() => setEZMode((prev) => !prev)} />
+            <Header
+                toggleEZMode={() => setEZMode((prev) => !prev)}
+                EZMode={EZMode}
+            />
             {inputs()}
             <Keyboard
                 handleKeyboardClick={handleKeyboardClick}
