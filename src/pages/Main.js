@@ -37,7 +37,7 @@ const Main = ({ todayAnswer }) => {
 
     const onChangeUserInput = useCallback(
         (key) => {
-            if (!key) return;
+            if (!key || isCorrect) return;
             if (EZMode === false && guesses.length >= 6) return;
             else if (key === "Backspace")
                 setCurrentGuess((prev) =>
