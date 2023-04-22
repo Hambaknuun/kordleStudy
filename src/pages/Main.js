@@ -1,6 +1,7 @@
 import Header from "../components/Header";
 import Input from "../components/Input";
 import Keyboard from "../components/Keyboard";
+import * as Hangul from "hangul-js";
 import { useEffect, useState, useCallback } from "react";
 import {
     checkAndCreateGameState,
@@ -37,6 +38,7 @@ const Main = ({ todayAnswer }) => {
     const onChangeUserInput = useCallback(
         (key) => {
             if (!key) return;
+            if (EZMode === false && guesses.length >= 6) return;
             else if (key === "Backspace")
                 setCurrentGuess((prev) =>
                     [...prev].filter((it, idx) => {
@@ -65,7 +67,15 @@ const Main = ({ todayAnswer }) => {
                 alert("음운이 부족합니다.");
                 break;
             case "WRONG":
-                alert("틀렸습니다! 다시 시도 해보세요");
+                if (EZMode === false && guesses.length === 5) {
+                    alert(
+                        `실패했습니다. 오늘의 정답은 "${Hangul.assemble(
+                            todayAnswer
+                        )}" 입니다.`
+                    );
+                } else {
+                    alert("틀렸습니다! 다시 시도 해보세요");
+                }
                 if (EZMode)
                     setGuesses((prev) =>
                         prev.length >= 6 ? [...prev.splice(1)] : [...prev]
