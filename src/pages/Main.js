@@ -2,7 +2,7 @@ import Header from "../components/Header";
 import Input from "../components/Input";
 import Keyboard from "../components/Keyboard";
 import { useEffect, useState, useCallback } from "react";
-import * as Hangul from "hangul-js";
+import { maxTrialCount } from "../constants/Const";
 import {
     todayAnswer,
     checkAndCreateGameState,
@@ -12,7 +12,6 @@ import {
 } from "../utils/vocab";
 
 const Main = () => {
-    const maxTrialCount = 6;
     const [currentGuess, setCurrentGuess] = useState([]);
     const [isCorrect, setIsCorrect] = useState(false);
     const [EZMode, setEZMode] = useState(false);

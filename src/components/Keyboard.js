@@ -1,6 +1,4 @@
-const keyboardArr1 = ["ㅂ", "ㅈ", "ㄷ", "ㄱ", "ㅅ", "ㅛ", "ㅕ", "ㅑ"];
-const keyboardArr2 = ["ㅁ", "ㄴ", "ㅇ", "ㄹ", "ㅎ", "ㅗ", "ㅓ", "ㅏ", "ㅣ"];
-const keyboardArr3 = ["ㅋ", "ㅌ", "ㅊ", "ㅍ", "ㅠ", "ㅜ", "ㅡ"];
+import { keyboardArr } from '../constants/Const';
 
 const Keyboard = ({ handleKeyboardClick, onChangeUserInput }) => {
     const KeyboardBtn = ({ val, className, onClickFunc, clickVal }) => {
@@ -29,8 +27,8 @@ const Keyboard = ({ handleKeyboardClick, onChangeUserInput }) => {
 
     return (
         <article className="keyboard">
-            <div className="keyboardLine">{generateKeyboard(keyboardArr1)}</div>
-            <div className="keyboardLine">{generateKeyboard(keyboardArr2)}</div>
+            <div className="keyboardLine">{generateKeyboard(keyboardArr[0])}</div>
+            <div className="keyboardLine">{generateKeyboard(keyboardArr[1])}</div>
             <div className="keyboardLine">
                 <KeyboardBtn
                     val={"입력"}
@@ -38,7 +36,7 @@ const Keyboard = ({ handleKeyboardClick, onChangeUserInput }) => {
                     onClickFunc={onChangeUserInput}
                     clickVal={"Enter"}
                 />
-                {generateKeyboard(keyboardArr3)}
+                {generateKeyboard(keyboardArr[2])}
                 <KeyboardBtn
                     val={"삭제"}
                     className={"keyboardFuncBtn"}
