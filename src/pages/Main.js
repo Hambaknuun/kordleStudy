@@ -1,15 +1,17 @@
 import Header from "../components/Header";
 import Input from "../components/Input";
 import Keyboard from "../components/Keyboard";
-import * as Hangul from "hangul-js";
 import { useEffect, useState, useCallback } from "react";
+import * as Hangul from "hangul-js";
 import {
+    todayAnswer,
     checkAndCreateGameState,
     convertKeyToHangul,
     enterGuess,
+    getTodayAnswerAssembled
 } from "../utils/vocab";
 
-const Main = ({ todayAnswer }) => {
+const Main = () => {
     const maxTrialCount = 6;
     const [currentGuess, setCurrentGuess] = useState([]);
     const [isCorrect, setIsCorrect] = useState(false);
@@ -69,9 +71,7 @@ const Main = ({ todayAnswer }) => {
             case "WRONG":
                 if (EZMode === false && guesses.length === 5) {
                     alert(
-                        `실패했습니다. 오늘의 정답은 "${Hangul.assemble(
-                            todayAnswer
-                        )}" 입니다.`
+                        `실패했습니다. 오늘의 정답은 "${getTodayAnswerAssembled()}" 입니다.`
                     );
                 } else {
                     alert("틀렸습니다! 다시 시도 해보세요");

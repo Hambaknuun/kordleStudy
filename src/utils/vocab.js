@@ -25,6 +25,13 @@ export const getVocabByDate = (date) => {
     return vocabArr;
 };
 
+
+export const todayAnswer = getVocabByDate(new Date());
+
+
+export const getTodayAnswerAssembled = () => {
+    return Hangul.assemble(todayAnswer);
+}
 // checkGameState
 export const checkAndCreateGameState = () => {
     let createFlag = false;
@@ -38,12 +45,12 @@ export const checkAndCreateGameState = () => {
         const curGameState = JSON.parse(localStorage.getItem("gameState"));
         const curSolution = Hangul.assemble(curGameState.solution);
         // 2. 문제 갱신이 필요한 경우
-        if (curSolution !== Hangul.assemble(getVocabByDate(new Date()))) {
+        if (curSolution !== Hangul.assemble(todayAnswer)) {
             createFlag = true;
         }
     }
 
-    if (createFlag) createGameState(getVocabByDate(new Date()));
+    if (createFlag) createGameState(todayAnswer);
 };
 
 // Create New Game State (Local Storage)
@@ -65,11 +72,11 @@ export const enterGuess = (guess) => {
 
     let resultType = "CORRECT";
     const localGameState = getLocalGameState();
-    const todayAnswer = localGameState
+    const localAnswer = localGameState
         ? localGameState.solution
-        : getVocabByDate(new Date());
+        : todayAnswer;
     guess.map((it, idx) => {
-        if (it !== todayAnswer[idx]) resultType = "WRONG";
+        if (it !== localAnswer[idx]) resultType = "WRONG";
     });
 
     return resultType;
@@ -77,13 +84,13 @@ export const enterGuess = (guess) => {
 
 export const getGuessResult = (guess) => {
     const localGameState = getLocalGameState();
-    const todayAnswer = localGameState
+    const localAnswer = localGameState
         ? localGameState.solution
-        : getVocabByDate(new Date());
+        : todayAnswer;
 
     const result = guess.map((it, idx) => {
-        if (it === todayAnswer[idx]) return { value: it, status: "correct" };
-        else if (todayAnswer.includes(it)) {
+        if (it === localAnswer[idx]) return { value: it, status: "correct" };
+        else if (localAnswer.includes(it)) {
             return { value: it, status: "present" };
         } else {
             return { value: it, status: "absent" };
