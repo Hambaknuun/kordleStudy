@@ -211,3 +211,19 @@ div {
   background-color: #e2e8f0;
   cursor: pointer;
 }
+
+/* 팝업 */
+.alertPopup{
+  position: absolute;
+  top: 80px;
+  left: calc((100% - 300px) / 2);
+  display: inline-block;
+  min-width: 300px;
+  padding: 15px 20px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: normal;
+  background-color: #f9caca;
+  box-sizing: border-box;
+  transition: 1s;
+}

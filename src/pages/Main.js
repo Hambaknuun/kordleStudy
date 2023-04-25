@@ -9,12 +9,18 @@ import {
     enterGuess,
 } from "../utils/vocab";
 
+const AlertPopup = ({ alertMsg }) => {
+    return <div className="alertPopup">{alertMsg}</div>;
+};
+
 const Main = ({ todayAnswer }) => {
     const maxTrialCount = 6;
     const [currentGuess, setCurrentGuess] = useState([]);
     const [isCorrect, setIsCorrect] = useState(false);
     const [EZMode, setEZMode] = useState(false);
     const [guesses, setGuesses] = useState([]);
+    const [showAlertMsg, setShowAlertMsg] = useState(false);
+    const [alertMsg, setAlertMsg] = useState("");
 
     useEffect(() => {
         checkAndCreateGameState();
@@ -64,7 +70,11 @@ const Main = ({ todayAnswer }) => {
     const handleGuessResultMsg = (resultType) => {
         switch (resultType) {
             case "NOT_ENOUGH":
-                alert("음운이 부족합니다.");
+                setShowAlertMsg(true);
+                setAlertMsg("음운이 부족합니다.");
+                setTimeout(() => {
+                    setShowAlertMsg(false);
+                }, 1000);
                 break;
             case "WRONG":
                 if (EZMode === false && guesses.length === 5) {
@@ -74,7 +84,11 @@ const Main = ({ todayAnswer }) => {
                         )}" 입니다.`
                     );
                 } else {
-                    alert("틀렸습니다! 다시 시도 해보세요");
+                    setShowAlertMsg(true);
+                    setAlertMsg("틀렸습니다! 다시 시도 해보세요");
+                    setTimeout(() => {
+                        setShowAlertMsg(false);
+                    }, 1000);
                 }
                 if (EZMode)
                     setGuesses((prev) =>
@@ -149,6 +163,7 @@ const Main = ({ todayAnswer }) => {
 
     return (
         <div className="playBoard">
+            {showAlertMsg ? <AlertPopup alertMsg={alertMsg} /> : ""}
             <Header
                 toggleEZMode={() => setEZMode((prev) => !prev)}
                 EZMode={EZMode}
