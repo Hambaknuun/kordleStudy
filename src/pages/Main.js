@@ -1,24 +1,23 @@
 import Header from "../components/Header";
 import Input from "../components/Input";
 import Keyboard from "../components/Keyboard";
-import * as Hangul from "hangul-js";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useReducer } from "react";
+import { maxTrialCount } from "../constants/Const";
+import { initialState, reducer } from "../reducer/reducer";
 import {
+    todayAnswer,
     checkAndCreateGameState,
     convertKeyToHangul,
     enterGuess,
+    getTodayAnswerAssembled,
 } from "../utils/vocab";
 
 const AlertPopup = ({ alertMsg }) => {
     return <div className="alertPopup">{alertMsg}</div>;
 };
 
-const Main = ({ todayAnswer }) => {
-    const maxTrialCount = 6;
-    const [currentGuess, setCurrentGuess] = useState([]);
-    const [isCorrect, setIsCorrect] = useState(false);
-    const [EZMode, setEZMode] = useState(false);
-    const [guesses, setGuesses] = useState([]);
+const Main = () => {
+    const [values, dispatch] = useReducer(reducer, initialState);
     const [showAlertMsg, setShowAlertMsg] = useState(false);
     const [alertMsg, setAlertMsg] = useState("");
 
@@ -30,41 +29,37 @@ const Main = ({ todayAnswer }) => {
             : [];
         const localGuesses = localGameState?.guesses;
 
-        setGuesses(localGuesses);
+        dispatch({
+            type: "INITIALIZE_GUESSES_LOCALSTORAGE",
+            data: localGuesses,
+        });
 
-        if (guesses) {
-            const resultType = enterGuess(guesses.at(-1));
+        if (localGuesses) {
+            const resultType = enterGuess(localGuesses.at(-1));
             if (resultType === "CORRECT") {
+                dispatch({ type: "CORRECT" });
                 handleGuessResultMsg(resultType);
-                setIsCorrect(true);
             }
         }
     }, []);
 
     const onChangeUserInput = useCallback(
         (key) => {
-            if (!key || isCorrect) return;
-            if (EZMode === false && guesses.length >= 6) return;
-            else if (key === "Backspace")
-                setCurrentGuess((prev) =>
-                    [...prev].filter((it, idx) => {
-                        return idx !== prev.length - 1 ? true : false;
-                    })
-                );
+            if (!key || values.isCorrect) return;
+            if (values.EZMode === false && values.guesses.length >= 6) return;
+            else if (key === "Backspace") dispatch({ type: "BACKSPACE" });
             else if (key === "Enter") {
-                const guessResult = enterGuess(currentGuess);
+                const guessResult = enterGuess(values.currentGuess);
                 if (guessResult !== "NOT_ENOUGH") {
-                    setGuesses((prev) => [...prev, currentGuess]);
-                    setCurrentGuess([]);
+                    dispatch({ type: "INSERT_GUESSES" });
+                    dispatch({ type: "INITIALIZE_CURRENT" });
                 }
                 handleGuessResultMsg(guessResult);
             } else {
-                setCurrentGuess((prev) => {
-                    return prev.length !== 6 ? [...prev, key] : [...prev];
-                });
+                dispatch({ type: "KEY_INPUT", key: key });
             }
         },
-        [currentGuess, todayAnswer]
+        [values.currentGuess, todayAnswer]
     );
 
     const handleGuessResultMsg = (resultType) => {
@@ -77,11 +72,9 @@ const Main = ({ todayAnswer }) => {
                 }, 1000);
                 break;
             case "WRONG":
-                if (EZMode === false && guesses.length === 5) {
+                if (values.EZMode === false && values.guesses.length === 5) {
                     alert(
-                        `실패했습니다. 오늘의 정답은 "${Hangul.assemble(
-                            todayAnswer
-                        )}" 입니다.`
+                        `실패했습니다. 오늘의 정답은 "${getTodayAnswerAssembled()}" 입니다.`
                     );
                 } else {
                     setShowAlertMsg(true);
@@ -90,14 +83,11 @@ const Main = ({ todayAnswer }) => {
                         setShowAlertMsg(false);
                     }, 1000);
                 }
-                if (EZMode)
-                    setGuesses((prev) =>
-                        prev.length >= 6 ? [...prev.splice(1)] : [...prev]
-                    );
+                if (values.EZMode) dispatch({ type: "SPLICE_GUESSES" });
                 break;
             case "CORRECT":
                 alert("정답입니다! 축하드립니다!");
-                setIsCorrect(true);
+                dispatch({ type: "CORRECT" });
                 break;
             default:
                 break;
@@ -118,44 +108,47 @@ const Main = ({ todayAnswer }) => {
     const handleKeyboardClick = useCallback(
         (event) => {
             console.log(event + " keyboard Click!");
-            if (isCorrect) return;
+            if (values.isCorrect) return;
             onChangeUserInput(event);
         },
         [onChangeUserInput]
     );
 
     useEffect(() => {
-        console.log("currentGuess", currentGuess);
-    }, [currentGuess]);
+        console.log("currentGuess", values.currentGuess);
+    }, [values.currentGuess]);
 
     useEffect(() => {
-        console.log("guesses", guesses);
+        console.log("guesses", values.guesses);
 
         const localGameState = JSON.parse(localStorage.getItem("gameState"))
             ? JSON.parse(localStorage.getItem("gameState"))
             : [];
-        localGameState.guesses = guesses;
+        localGameState.guesses = values.guesses;
         localStorage.setItem("gameState", JSON.stringify(localGameState));
-    }, [guesses]);
+    }, [values.guesses]);
 
     useEffect(() => {
         document.addEventListener("keyup", handleKeyUp);
-        if (isCorrect) document.removeEventListener("keyup", handleKeyUp);
+        if (values.isCorrect)
+            document.removeEventListener("keyup", handleKeyUp);
         return () => {
             document.removeEventListener("keyup", handleKeyUp);
         };
-    }, [handleKeyUp, isCorrect]);
+    }, [handleKeyUp, values.isCorrect]);
 
     const inputs = () => {
         const result = [];
-        guesses.map((it) => {
+        values.guesses.map((it) => {
             result.push(<Input guess={it} status={"past"} />);
         });
         // EZ모드 Validation 추가
-        if (EZMode || guesses.length < 6)
-            result.push(<Input guess={currentGuess} status={"current"} />);
+        if (values.EZMode || values.guesses.length < 6)
+            result.push(
+                <Input guess={values.currentGuess} status={"current"} />
+            );
 
-        for (let i = 1; i < maxTrialCount - guesses.length; i++) {
+        for (let i = 1; i < maxTrialCount - values.guesses.length; i++) {
             result.push(<Input guess={[]} status={"future"} />);
         }
         return result;
@@ -165,8 +158,8 @@ const Main = ({ todayAnswer }) => {
         <div className="playBoard">
             {showAlertMsg ? <AlertPopup alertMsg={alertMsg} /> : ""}
             <Header
-                toggleEZMode={() => setEZMode((prev) => !prev)}
-                EZMode={EZMode}
+                toggleEZMode={() => dispatch({ type: "TOGGLE_MODE" })}
+                EZMode={values.EZMode}
             />
             {inputs()}
             <Keyboard
