@@ -10,6 +10,7 @@ import {
     convertKeyToHangul,
     enterGuess,
     getTodayAnswerAssembled,
+    getGuessResults,
 } from "../utils/vocab";
 
 const AlertPopup = ({ alertMsg }) => {
@@ -163,6 +164,7 @@ const Main = () => {
             />
             {inputs()}
             <Keyboard
+                guessResults={getGuessResults(values.guesses)}
                 handleKeyboardClick={handleKeyboardClick}
                 onChangeUserInput={onChangeUserInput}
             />

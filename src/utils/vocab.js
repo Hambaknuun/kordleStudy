@@ -100,6 +100,13 @@ export const getGuessResult = (guess) => {
     return result;
 };
 
+export const getGuessResults = (guesses) => {
+    if(!guesses) return [];
+    return guesses.map((guess)=>{
+        return getGuessResult(guess);
+    })
+}
+
 export const convertKeyToHangul = (key) => {
     // key 값에 따라 한글로 변환
     switch (key) {
