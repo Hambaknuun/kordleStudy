@@ -11,6 +11,7 @@ import {
     enterGuess,
     getTodayAnswerAssembled,
     getGuessResults,
+    getkeyResults
 } from "../utils/vocab";
 
 const AlertPopup = ({ alertMsg }) => {
@@ -164,7 +165,7 @@ const Main = () => {
             />
             {inputs()}
             <Keyboard
-                guessResults={getGuessResults(values.guesses)}
+                keyResults={getkeyResults(values.guesses)}
                 handleKeyboardClick={handleKeyboardClick}
                 onChangeUserInput={onChangeUserInput}
             />

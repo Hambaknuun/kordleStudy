@@ -102,9 +102,40 @@ export const getGuessResult = (guess) => {
 
 export const getGuessResults = (guesses) => {
     if(!guesses) return [];
+    
     return guesses.map((guess)=>{
         return getGuessResult(guess);
     })
+}
+
+export const getkeyResults = (guesses) => {
+    if (!guesses) return {};
+    
+    const guessResults = getGuessResults(guesses);
+    const keyResults = {};
+    if(guessResults && guessResults.length > 0){
+        guessResults.map((guess, i)=>{
+            guess.map((it, j) => {
+                if (it.value in keyResults) {
+                    if (it.status !== keyResults[it.value]) { 
+                        if (it.status === 'correct' && keyResults[it.value] !== 'correct') {
+                            console.log("correct" + i + ", " + j, it);
+                            keyResults[it.value] = it.status;
+                        }
+                        else if (it.status === 'present' && keyResults[it.value] === 'absent') { 
+                            console.log("present" + i + ", " + j, it);
+                            keyResults[it.value] = it.status;
+                        }
+                    }
+                } else { 
+                    console.log("new" + i + ", " + j, it);
+                    keyResults[it.value] = it.status;
+                }
+            })
+        })
+    }
+
+    return keyResults;
 }
 
 export const convertKeyToHangul = (key) => {
