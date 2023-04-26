@@ -11,17 +11,28 @@ import {
     enterGuess,
     getTodayAnswerAssembled,
     getGuessResults,
-    getkeyResults
+    getkeyResults,
 } from "../utils/vocab";
 
-const AlertPopup = ({ alertMsg }) => {
-    return <div className="alertPopup">{alertMsg}</div>;
+const AlertPopup = ({ alertMsg, isSuccess }) => {
+    return (
+        <div
+            className={["alertPopup", `${isSuccess ? "success" : ""}`].join(
+                " "
+            )}
+        >
+            {alertMsg}
+        </div>
+    );
 };
 
 const Main = () => {
     const [values, dispatch] = useReducer(reducer, initialState);
     const [showAlertMsg, setShowAlertMsg] = useState(false);
-    const [alertMsg, setAlertMsg] = useState("");
+    const [alertMsgInfo, setAlertMsgInfo] = useState({
+        message: "",
+        isSuccess: false,
+    });
 
     useEffect(() => {
         checkAndCreateGameState();
@@ -68,27 +79,45 @@ const Main = () => {
         switch (resultType) {
             case "NOT_ENOUGH":
                 setShowAlertMsg(true);
-                setAlertMsg("음운이 부족합니다.");
+                setAlertMsgInfo({
+                    message: "음운이 부족합니다.",
+                    isSuccess: false,
+                });
                 setTimeout(() => {
                     setShowAlertMsg(false);
-                }, 1000);
+                }, 1500);
                 break;
             case "WRONG":
                 if (values.EZMode === false && values.guesses.length === 5) {
-                    alert(
-                        `실패했습니다. 오늘의 정답은 "${getTodayAnswerAssembled()}" 입니다.`
-                    );
-                } else {
                     setShowAlertMsg(true);
-                    setAlertMsg("틀렸습니다! 다시 시도 해보세요");
+                    setAlertMsgInfo({
+                        message: `실패했습니다. 오늘의 정답은 "${getTodayAnswerAssembled()}" 입니다.`,
+                        isSuccess: false,
+                    });
                     setTimeout(() => {
                         setShowAlertMsg(false);
-                    }, 1000);
+                    }, 1500);
+                } else {
+                    setShowAlertMsg(true);
+                    setAlertMsgInfo({
+                        message: "틀렸습니다! 다시 시도 해보세요",
+                        isSuccess: false,
+                    });
+                    setTimeout(() => {
+                        setShowAlertMsg(false);
+                    }, 1500);
                 }
                 if (values.EZMode) dispatch({ type: "SPLICE_GUESSES" });
                 break;
             case "CORRECT":
-                alert("정답입니다! 축하드립니다!");
+                setShowAlertMsg(true);
+                setAlertMsgInfo({
+                    message: "정답입니다! 축하드립니다!",
+                    isSuccess: true,
+                });
+                setTimeout(() => {
+                    setShowAlertMsg(false);
+                }, 1500);
                 dispatch({ type: "CORRECT" });
                 break;
             default:
@@ -158,7 +187,14 @@ const Main = () => {
 
     return (
         <div className="playBoard">
-            {showAlertMsg ? <AlertPopup alertMsg={alertMsg} /> : ""}
+            {showAlertMsg ? (
+                <AlertPopup
+                    alertMsg={alertMsgInfo.message}
+                    isSuccess={alertMsgInfo.isSuccess}
+                />
+            ) : (
+                ""
+            )}
             <Header
                 toggleEZMode={() => dispatch({ type: "TOGGLE_MODE" })}
                 EZMode={values.EZMode}

@@ -227,3 +227,7 @@ div {
   box-sizing: border-box;
   transition: 1s;
 }
+
+.alertPopup.success{
+  background-color: #cdf9ca;
+}
