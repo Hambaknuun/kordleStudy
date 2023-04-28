@@ -1,24 +1,24 @@
 import "./App.css";
 import Main from "./pages/Main";
-import { getVocabByDate,checkAndCreateGameState } from "./utils/vocab";
+import { getVocabByDate, checkAndCreateGameState } from "./utils/vocab";
 import { useEffect } from "react";
 
 function App() {
-  const todayAnswer = getVocabByDate(new Date());
+    const todayAnswer = getVocabByDate(new Date());
 
-  useEffect(() => {
-    console.log("todayAnswer", todayAnswer);
-  }, [todayAnswer]);
-  
-  useEffect(() => {
-    checkAndCreateGameState();
-  }, []);
+    useEffect(() => {
+        console.log("todayAnswer", todayAnswer);
+    }, [todayAnswer]);
 
-  return (
-    <div className="App">
-      <Main todayAnswer={todayAnswer} />
-    </div>
-  );
+    /*     useEffect(() => {
+        checkAndCreateGameState();
+    }, []); */
+
+    return (
+        <div className="App">
+            <Main todayAnswer={todayAnswer} />
+        </div>
+    );
 }
 
 export default App;

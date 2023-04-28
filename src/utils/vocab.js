@@ -38,7 +38,7 @@ export const checkAndCreateGameState = () => {
         const curGameState = JSON.parse(localStorage.getItem("gameState"));
         const curSolution = Hangul.assemble(curGameState.solution);
         // 2. 문제 갱신이 필요한 경우
-        if (curGameState.solution !== getVocabByDate(new Date())) {
+        if (curSolution !== Hangul.assemble(getVocabByDate(new Date()))) {
             createFlag = true;
         }
     }
@@ -49,13 +49,7 @@ export const checkAndCreateGameState = () => {
 // Create New Game State (Local Storage)
 export const createGameState = (todayVocab) => {
     const solution = Hangul.disassemble(todayVocab);
-    let newGameState = {};
-    if (!localStorage.getItem("gameState")) {
-        newGameState = { guesses: [], solution: solution };
-    } else {
-        newGameState = JSON.parse(localStorage.getItem("gameState"));
-    }
-
+    const newGameState = { guesses: [], solution: solution };
     localStorage.setItem("gameState", JSON.stringify(newGameState));
 };
 
