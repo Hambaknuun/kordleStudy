@@ -96,15 +96,11 @@ export const getGuessResult = (guess) => {
     });
 
     result.map((it, idx) => {
-        console.log(it.status === "absent");
-        console.log(countAnswer[it.value] > 0);
-        console.log(localAnswer.includes(it.value));
         if (
             it.status === "absent" &&
             countAnswer[it.value] > 0 &&
             localAnswer.includes(it.value)
         ) {
-            console.log("absent!");
             countAnswer[it.value] -= 1;
             it.status = "present";
         }
