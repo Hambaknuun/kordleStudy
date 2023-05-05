@@ -25,13 +25,11 @@ export const getVocabByDate = (date) => {
     return vocabArr;
 };
 
-
 export const todayAnswer = getVocabByDate(new Date());
-
 
 export const getTodayAnswerAssembled = () => {
     return Hangul.assemble(todayAnswer);
-}
+};
 // checkGameState
 export const checkAndCreateGameState = () => {
     let createFlag = false;
@@ -72,9 +70,7 @@ export const enterGuess = (guess) => {
 
     let resultType = "CORRECT";
     const localGameState = getLocalGameState();
-    const localAnswer = localGameState
-        ? localGameState.solution
-        : todayAnswer;
+    const localAnswer = localGameState ? localGameState.solution : todayAnswer;
     guess.map((it, idx) => {
         if (it !== localAnswer[idx]) resultType = "WRONG";
     });
@@ -84,16 +80,33 @@ export const enterGuess = (guess) => {
 
 export const getGuessResult = (guess) => {
     const localGameState = getLocalGameState();
-    const localAnswer = localGameState
-        ? localGameState.solution
-        : todayAnswer;
+    const localAnswer = localGameState ? localGameState.solution : todayAnswer;
+    const countAnswer = localAnswer.reduce((accu, curr) => {
+        accu[curr] = (accu[curr] || 0) + 1;
+        return accu;
+    }, {});
 
-    const result = guess.map((it, idx) => {
-        if (it === localAnswer[idx]) return { value: it, status: "correct" };
-        else if (localAnswer.includes(it)) {
-            return { value: it, status: "present" };
+    let result = guess.map((it, idx) => {
+        if (it === localAnswer[idx]) {
+            countAnswer[it] -= 1;
+            return { value: guess[idx], status: "correct" };
         } else {
-            return { value: it, status: "absent" };
+            return { value: guess[idx], status: "absent" };
+        }
+    });
+
+    result.map((it, idx) => {
+        console.log(it.status === "absent");
+        console.log(countAnswer[it.value] > 0);
+        console.log(localAnswer.includes(it.value));
+        if (
+            it.status === "absent" &&
+            countAnswer[it.value] > 0 &&
+            localAnswer.includes(it.value)
+        ) {
+            console.log("absent!");
+            countAnswer[it.value] -= 1;
+            it.status = "present";
         }
     });
 
@@ -101,42 +114,47 @@ export const getGuessResult = (guess) => {
 };
 
 export const getGuessResults = (guesses) => {
-    if(!guesses) return [];
-    
-    return guesses.map((guess)=>{
+    if (!guesses) return [];
+
+    return guesses.map((guess) => {
         return getGuessResult(guess);
-    })
-}
+    });
+};
 
 export const getkeyResults = (guesses) => {
     if (!guesses) return {};
-    
+
     const guessResults = getGuessResults(guesses);
     const keyResults = {};
-    if(guessResults && guessResults.length > 0){
-        guessResults.map((guess, i)=>{
+    if (guessResults && guessResults.length > 0) {
+        guessResults.map((guess, i) => {
             guess.map((it, j) => {
                 if (it.value in keyResults) {
-                    if (it.status !== keyResults[it.value]) { 
-                        if (it.status === 'correct' && keyResults[it.value] !== 'correct') {
+                    if (it.status !== keyResults[it.value]) {
+                        if (
+                            it.status === "correct" &&
+                            keyResults[it.value] !== "correct"
+                        ) {
                             console.log("correct" + i + ", " + j, it);
                             keyResults[it.value] = it.status;
-                        }
-                        else if (it.status === 'present' && keyResults[it.value] === 'absent') { 
+                        } else if (
+                            it.status === "present" &&
+                            keyResults[it.value] === "absent"
+                        ) {
                             console.log("present" + i + ", " + j, it);
                             keyResults[it.value] = it.status;
                         }
                     }
-                } else { 
+                } else {
                     console.log("new" + i + ", " + j, it);
                     keyResults[it.value] = it.status;
                 }
-            })
-        })
+            });
+        });
     }
 
     return keyResults;
-}
+};
 
 export const convertKeyToHangul = (key) => {
     // key 값에 따라 한글로 변환
