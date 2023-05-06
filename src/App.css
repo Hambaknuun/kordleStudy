@@ -42,8 +42,11 @@ div {
 }
 
 .App {
+  position: relative;
   display: inline-block;
   width: 100%;
+  height: 100vh;
+  background-color: #fff;
   text-align: center;
 }
 
@@ -230,4 +233,30 @@ div {
 
 .alertPopup.success{
   background-color: #cdf9ca;
+}
+
+/* EZ모드 배경 */
+.snowflake {
+  width: 100vw;
+  height: 100vh;
+  background-image: url('/public/img/img_blossom_leaf_01.png');
+  background-size: auto;
+  background-repeat: repeat;
+  position: absolute;
+  top: -10vh;
+  left: 0;
+  animation: snowfall 13s linear infinite;
+  animation-delay: -8s;
+}
+
+@keyframes snowfall {
+  0% {
+    transform: translate3d(0vw, 0, 0);
+  }
+  50% {
+    transform: translate3d(5vw, 50vh, 0);
+  }
+  100% {
+    transform: translate3d(3vw, 100vh, 0);
+  }
 }
