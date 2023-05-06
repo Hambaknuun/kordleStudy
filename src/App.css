@@ -48,13 +48,16 @@ div {
   height: 100vh;
   background-color: #fff;
   text-align: center;
+  overflow: hidden;
 }
 
 .playBoard {
+  position: relative;
   display: inline-block;
   width: 100%;
   max-width: 450px;
   text-align: center;
+  z-index: 100;
 }
 
 /* 헤더 */
@@ -172,7 +175,6 @@ div {
 
 /* 키보드 */
 .keyboard{
-  float: left;
   display: inline-block;
   text-align: center;
   margin-top: 24px;
@@ -243,20 +245,33 @@ div {
   background-size: auto;
   background-repeat: repeat;
   position: absolute;
-  top: -10vh;
+  top: -15vh;
   left: 0;
   animation: snowfall 13s linear infinite;
-  animation-delay: -8s;
+  animation-delay: 0;
+}
+
+.snowflake2 {
+  width: 100vw;
+  height: 100vh;
+  background-image: url('/public/img/img_blossom_leaf_02.png');
+  background-size: auto;
+  background-repeat: repeat;
+  position: absolute;
+  top: -15vh;
+  left: 0;
+  animation: snowfall 13s linear infinite;
+  animation-delay: 7s;
 }
 
 @keyframes snowfall {
   0% {
-    transform: translate3d(0vw, 0, 0);
+    transform: translate3d(10vw, 0, 0);
   }
   50% {
     transform: translate3d(5vw, 50vh, 0);
   }
   100% {
-    transform: translate3d(3vw, 100vh, 0);
+    transform: translate3d(15vw, 100vh, 0);
   }
 }

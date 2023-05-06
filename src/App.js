@@ -14,6 +14,13 @@ function App() {
                     values.EZMode ? "EZMode" : "HARDMode",
                 ].join(" ")}
             ></div>
+            <div
+                className={[
+                    "bgImg",
+                    "snowflake2",
+                    values.EZMode ? "EZMode" : "HARDMode",
+                ].join(" ")}
+            ></div>
             <Main />
         </div>
     );
