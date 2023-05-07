@@ -238,40 +238,131 @@ div {
 }
 
 /* EZ모드 배경 */
-.snowflake {
-  width: 100vw;
-  height: 100vh;
-  background-image: url('/public/img/img_blossom_leaf_01.png');
-  background-size: auto;
-  background-repeat: repeat;
+.blossomLeaf{
   position: absolute;
+  width: 150px;
+  height: 150px;
+  background-size: auto;
+  background-repeat: no-repeat;
   top: -15vh;
   left: 0;
-  animation: snowfall 13s linear infinite;
+}
+
+.blossomLeaf.img1 {
+  background-image: url('/public/img/blossom_leaf_1.png');
+  animation: snowfall_1 13s linear infinite;
   animation-delay: 0;
 }
-
-.snowflake2 {
-  width: 100vw;
-  height: 100vh;
-  background-image: url('/public/img/img_blossom_leaf_02.png');
-  background-size: auto;
-  background-repeat: repeat;
-  position: absolute;
-  top: -15vh;
-  left: 0;
-  animation: snowfall 13s linear infinite;
-  animation-delay: 7s;
-}
-
-@keyframes snowfall {
+@keyframes snowfall_1 {
   0% {
-    transform: translate3d(10vw, 0, 0);
+    transform: translate3d(5vw, 0, 0);
   }
   50% {
-    transform: translate3d(5vw, 50vh, 0);
+    transform: translate3d(20vw, 50vh, 0);
   }
   100% {
-    transform: translate3d(15vw, 100vh, 0);
+    transform: translate3d(10vw, 120vh, 0);
+  }
+}
+
+.blossomLeaf.img2 {
+  background-image: url('/public/img/blossom_leaf_2.png');
+  animation: snowfall_2 6s linear infinite;
+  animation-delay: 0;
+}
+@keyframes snowfall_2 {
+  0% {
+    transform: translate3d(60vw, 0, 0);
+  }
+  50% {
+    transform: translate3d(45vw, 50vh, 0);
+  }
+  100% {
+    transform: translate3d(50vw, 120vh, 0);
+  }
+}
+
+.blossomLeaf.img3 {
+  background-image: url('/public/img/blossom_leaf_3.png');
+  animation: snowfall_3 8s linear infinite;
+  animation-delay: 5s;
+}
+@keyframes snowfall_3 {
+  0% {
+    transform: translate3d(30vw, 0, 0);
+  }
+  50% {
+    transform: translate3d(18vw, 50vh, 0);
+  }
+  100% {
+    transform: translate3d(25vw, 120vh, 0);
+  }
+}
+
+.blossomLeaf.img4 {
+  background-image: url('/public/img/blossom_leaf_4.png');
+  animation: snowfall_4 8s linear infinite;
+  animation-delay: 3s;
+}
+@keyframes snowfall_4 {
+  0% {
+    transform: translate3d(0vw, 0, 0);
+  }
+  50% {
+    transform: translate3d(10vw, 50vh, 0);
+  }
+  100% {
+    transform: translate3d(7vw, 120vh, 0);
+  }
+}
+
+.blossomLeaf.img5 {
+  background-image: url('/public/img/blossom_leaf_5.png');
+  animation: snowfall_5 8s linear infinite;
+  animation-delay: 3s;
+}
+@keyframes snowfall_5 {
+  0% {
+    transform: translate3d(80vw, 0, 0);
+  }
+  50% {
+    transform: translate3d(90vw, 50vh, 0);
+  }
+  100% {
+    transform: translate3d(85vw, 120vh, 0);
+  }
+}
+
+.blossomLeaf.img6 {
+  background-image: url('/public/img/blossom_leaf_6.png');
+  animation: snowfall_6 13s linear infinite;
+  animation-delay: 10s;
+}
+@keyframes snowfall_6 {
+  0% {
+    transform: translate3d(70vw, 0, 0);
+  }
+  50% {
+    transform: translate3d(78vw, 50vh, 0);
+  }
+  100% {
+    transform: translate3d(70vw, 120vh, 0);
+  }
+}
+
+.blossomLeaf.img7 {
+  background-image: url('/public/img/blossom_leaf_7.png');
+  animation: snowfall_7 7s linear infinite;
+  animation-delay: 1s;
+}
+@keyframes snowfall_6 {
+  0% {
+    transform: translate3d(50vw, 0, 0);
+  }
+  50% {
+    transform: translate3d(58vw, 50vh, 0);
+  }
+  100% {
+    transform: translate3d(60vw, 120vh, 0);
   }
 }
