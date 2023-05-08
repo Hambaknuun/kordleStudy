@@ -245,124 +245,64 @@ div {
   background-size: auto;
   background-repeat: no-repeat;
   top: -15vh;
-  left: 0;
+  left: var(--left);
 }
 
 .blossomLeaf.img1 {
-  background-image: url('/public/img/blossom_leaf_1.png');
-  animation: snowfall_1 13s linear infinite;
-  animation-delay: 0;
-}
-@keyframes snowfall_1 {
-  0% {
-    transform: translate3d(5vw, 0, 0);
-  }
-  50% {
-    transform: translate3d(20vw, 50vh, 0);
-  }
-  100% {
-    transform: translate3d(10vw, 120vh, 0);
-  }
+  /* todo: 1과 똑같이 이미지 경로를 설정해도 local에서는 이미지를 불러오지 못함
+  local에서 보이는 1의 경로 : http://localhost:3000/static/media/blossom_leaf_1.30c7c8a938d4787d9491.png
+  local에서 보이는 2의 경로 : url("/public/img/blossom_leaf_1.png")
+  */
+  /* 1 */background-image: url('/public/img/blossom_leaf_1.png');
+  /* 2 */background-image: var(--background-image);
+  animation: snowfall var(--animation) linear infinite;
+  animation-delay: var(--animation-delay);
 }
 
 .blossomLeaf.img2 {
   background-image: url('/public/img/blossom_leaf_2.png');
-  animation: snowfall_2 6s linear infinite;
+  animation: snowfall 6s linear infinite;
   animation-delay: 0;
-}
-@keyframes snowfall_2 {
-  0% {
-    transform: translate3d(60vw, 0, 0);
-  }
-  50% {
-    transform: translate3d(45vw, 50vh, 0);
-  }
-  100% {
-    transform: translate3d(50vw, 120vh, 0);
-  }
 }
 
 .blossomLeaf.img3 {
   background-image: url('/public/img/blossom_leaf_3.png');
-  animation: snowfall_3 8s linear infinite;
+  animation: snowfall 8s linear infinite;
   animation-delay: 5s;
-}
-@keyframes snowfall_3 {
-  0% {
-    transform: translate3d(30vw, 0, 0);
-  }
-  50% {
-    transform: translate3d(18vw, 50vh, 0);
-  }
-  100% {
-    transform: translate3d(25vw, 120vh, 0);
-  }
 }
 
 .blossomLeaf.img4 {
   background-image: url('/public/img/blossom_leaf_4.png');
-  animation: snowfall_4 8s linear infinite;
+  animation: snowfall 8s linear infinite;
   animation-delay: 3s;
-}
-@keyframes snowfall_4 {
-  0% {
-    transform: translate3d(0vw, 0, 0);
-  }
-  50% {
-    transform: translate3d(10vw, 50vh, 0);
-  }
-  100% {
-    transform: translate3d(7vw, 120vh, 0);
-  }
 }
 
 .blossomLeaf.img5 {
   background-image: url('/public/img/blossom_leaf_5.png');
-  animation: snowfall_5 8s linear infinite;
+  animation: snowfall 8s linear infinite;
   animation-delay: 3s;
-}
-@keyframes snowfall_5 {
-  0% {
-    transform: translate3d(80vw, 0, 0);
-  }
-  50% {
-    transform: translate3d(90vw, 50vh, 0);
-  }
-  100% {
-    transform: translate3d(85vw, 120vh, 0);
-  }
 }
 
 .blossomLeaf.img6 {
   background-image: url('/public/img/blossom_leaf_6.png');
-  animation: snowfall_6 13s linear infinite;
+  animation: snowfall 13s linear infinite;
   animation-delay: 10s;
-}
-@keyframes snowfall_6 {
-  0% {
-    transform: translate3d(70vw, 0, 0);
-  }
-  50% {
-    transform: translate3d(78vw, 50vh, 0);
-  }
-  100% {
-    transform: translate3d(70vw, 120vh, 0);
-  }
 }
 
 .blossomLeaf.img7 {
   background-image: url('/public/img/blossom_leaf_7.png');
-  animation: snowfall_7 7s linear infinite;
+  animation: snowfall 7s linear infinite;
   animation-delay: 1s;
 }
-@keyframes snowfall_6 {
+
+@keyframes snowfall {
   0% {
-    transform: translate3d(50vw, 0, 0);
+    transform: translate3d(var(--left-ini), 0, 0);
   }
   50% {
-    transform: translate3d(58vw, 50vh, 0);
+    transform: translate3d(var(--left-center), 50vh, 0);
   }
   100% {
-    transform: translate3d(60vw, 120vh, 0);
+    transform: translate3d(var(--left-end), 120vh, 0);
   }
 }
