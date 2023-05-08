@@ -179,7 +179,7 @@ const Main = () => {
   };
 
   const handleToggleEZMode = () => {
-    if (!values.EZMode && values.guesses.length < 6) {
+    if (!values.isCorrect && !values.EZMode && values.guesses.length < 6) {
       dispatch({ type: "TOGGLE_MODE" });
     }
   };
