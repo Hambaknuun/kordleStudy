@@ -248,51 +248,10 @@ div {
   left: var(--left);
 }
 
-.blossomLeaf.img1 {
-  /* todo: 1과 똑같이 이미지 경로를 설정해도 local에서는 이미지를 불러오지 못함
-  local에서 보이는 1의 경로 : http://localhost:3000/static/media/blossom_leaf_1.30c7c8a938d4787d9491.png
-  local에서 보이는 2의 경로 : url("/public/img/blossom_leaf_1.png")
-  */
-  /* 1 */background-image: url('/public/img/blossom_leaf_1.png');
-  /* 2 */background-image: var(--background-image);
+[class*=blossomImg] {
+  background-image: var(--background-image);
   animation: snowfall var(--animation) linear infinite;
   animation-delay: var(--animation-delay);
-}
-
-.blossomLeaf.img2 {
-  background-image: url('/public/img/blossom_leaf_2.png');
-  animation: snowfall 6s linear infinite;
-  animation-delay: 0;
-}
-
-.blossomLeaf.img3 {
-  background-image: url('/public/img/blossom_leaf_3.png');
-  animation: snowfall 8s linear infinite;
-  animation-delay: 5s;
-}
-
-.blossomLeaf.img4 {
-  background-image: url('/public/img/blossom_leaf_4.png');
-  animation: snowfall 8s linear infinite;
-  animation-delay: 3s;
-}
-
-.blossomLeaf.img5 {
-  background-image: url('/public/img/blossom_leaf_5.png');
-  animation: snowfall 8s linear infinite;
-  animation-delay: 3s;
-}
-
-.blossomLeaf.img6 {
-  background-image: url('/public/img/blossom_leaf_6.png');
-  animation: snowfall 13s linear infinite;
-  animation-delay: 10s;
-}
-
-.blossomLeaf.img7 {
-  background-image: url('/public/img/blossom_leaf_7.png');
-  animation: snowfall 7s linear infinite;
-  animation-delay: 1s;
 }
 
 @keyframes snowfall {

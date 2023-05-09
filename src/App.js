@@ -11,13 +11,13 @@ function App() {
             /* const bgImg = `url("${
                 process.env.PUBLIC_URL
             }/public/img/blossom_leaf_${i + 1}.png")`; */
-            const bgImg = `url("public/img/blossom_leaf_${i + 1}.png")`;
+            const bgImg = `url("/assets/blossom_leaf_${i + 1}.png")`;
             const animation = `snowfall ${
                 5 + Math.random(10)
             }s linear infinite`;
             result.push(
                 <div
-                    className={["blossomLeaf", `img${i + 1}`].join(" ")}
+                    className={["blossomLeaf", `blossomImg_${i + 1}`].join(" ")}
                     style={{
                         "--background-image": bgImg,
                         idx: i + 1,
@@ -27,7 +27,7 @@ function App() {
                         "--left-end": `${Math.random(20) - 10}vw`,
                         "--left": `${Math.random() * (90 - 10) + 10}vw`,
                         "--animation": `${Math.random(10) + 5}s`,
-                        "--animation-delay": `${Math.random(10)}s`,
+                        "--animation-delay": `${Math.random(10) * 5}s`,
                     }}
                 ></div>
             );
