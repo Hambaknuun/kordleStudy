@@ -4,17 +4,10 @@ import React, { useReducer, useEffect } from "react";
 import { initialState, reducer } from "./reducer/reducer";
 
 function App() {
-    const [values, dispatch] = useReducer(reducer, initialState);
     const blossomLeaf = () => {
         const result = [];
         for (let i = 0; i < 7; i++) {
-            /* const bgImg = `url("${
-                process.env.PUBLIC_URL
-            }/public/img/blossom_leaf_${i + 1}.png")`; */
             const bgImg = `url("/assets/blossom_leaf_${i + 1}.png")`;
-            const animation = `snowfall ${
-                5 + Math.random(10)
-            }s linear infinite`;
             result.push(
                 <div
                     className={["blossomLeaf", `blossomImg_${i + 1}`].join(" ")}
