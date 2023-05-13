@@ -237,6 +237,16 @@ div {
   background-color: #cdf9ca;
 }
 
+/* 배경 */
+.backgroundWrap{
+  position: fixed;
+  left: 0;
+  top: 0;
+  display: inline-block;
+  width: 100vw;
+  height: 100vh;
+}
+
 /* EZ모드 배경 */
 .blossomLeaf{
   position: absolute;
