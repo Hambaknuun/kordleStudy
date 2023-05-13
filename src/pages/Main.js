@@ -1,7 +1,8 @@
 import Header from "../components/Header";
 import Input from "../components/Input";
 import Keyboard from "../components/Keyboard";
-import { useEffect, useState, useCallback, useReducer } from "react";
+import Background from "./Background";
+import React, { useEffect, useState, useCallback, useReducer } from "react";
 import { maxTrialCount } from "../constants/Const";
 import { initialState, reducer } from "../reducer/reducer";
 import {
@@ -13,30 +14,6 @@ import {
     getkeyResults,
     setLocalGameStatistics,
 } from "../utils/vocab";
-
-const blossomLeaf = () => {
-    const result = [];
-    for (let i = 0; i < 7; i++) {
-        const bgImg = `url("/assets/blossom_leaf_${i + 1}.png")`;
-        result.push(
-            <div
-                className={["blossomLeaf", `blossomImg_${i + 1}`].join(" ")}
-                style={{
-                    "--background-image": bgImg,
-                    idx: i + 1,
-                    "--size": `${Math.random() * (150 - 120) + 120}px`,
-                    "--left-ini": `${Math.random(20) - 10}vw`,
-                    "--left-center": `${Math.random(20)}vw`,
-                    "--left-end": `${Math.random(20) - 10}vw`,
-                    "--left": `${Math.random() * (90 - 10) + 10}vw`,
-                    "--animation": `${Math.random(10) + 5}s`,
-                    "--animation-delay": `${Math.random(10) * 5}s`,
-                }}
-            ></div>
-        );
-    }
-    return result;
-};
 
 const AlertPopup = ({ alertMsg, isSuccess }) => {
     return (
@@ -231,23 +208,30 @@ const Main = () => {
     };
 
     return (
-        <div className="playBoard">
-            <div class="backgroundWrap">{blossomLeaf()}</div>
-            {showAlertMsg ? (
-                <AlertPopup
-                    alertMsg={alertMsgInfo.message}
-                    isSuccess={alertMsgInfo.isSuccess}
+        <div class="backgroundWrap">
+            <Background mode={values.EZMode} />
+            <div className="playBoard">
+                {/* {flame()} */}
+                {/* {flame2()} */}
+                {showAlertMsg ? (
+                    <AlertPopup
+                        alertMsg={alertMsgInfo.message}
+                        isSuccess={alertMsgInfo.isSuccess}
+                    />
+                ) : (
+                    ""
+                )}
+                <Header
+                    toggleEZMode={handleToggleEZMode}
+                    EZMode={values.EZMode}
                 />
-            ) : (
-                ""
-            )}
-            <Header toggleEZMode={handleToggleEZMode} EZMode={values.EZMode} />
-            {inputs()}
-            <Keyboard
-                keyResults={getkeyResults(values.guesses)}
-                handleKeyboardClick={handleKeyboardClick}
-                onChangeUserInput={onChangeUserInput}
-            />
+                {inputs()}
+                <Keyboard
+                    keyResults={getkeyResults(values.guesses)}
+                    handleKeyboardClick={handleKeyboardClick}
+                    onChangeUserInput={onChangeUserInput}
+                />
+            </div>
         </div>
     );
 };
