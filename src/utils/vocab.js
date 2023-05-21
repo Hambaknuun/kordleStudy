@@ -70,8 +70,6 @@ export const setLocalGameStatistics = (haveWon, trial) => {
     ? JSON.parse(localStorage.getItem("gameStats"))
     : createLocalGameStatistics();
 
-  console.log("뭔데", localGameStats);
-  console.log("뭔데에에", localGameStats.winDistribution);
   if (haveWon) {
     // 정답을 맞춘 경우
     const newGameStats = {
@@ -184,18 +182,18 @@ export const getkeyResults = (guesses) => {
         if (it.value in keyResults) {
           if (it.status !== keyResults[it.value]) {
             if (it.status === "correct" && keyResults[it.value] !== "correct") {
-              console.log("correct" + i + ", " + j, it);
+              // console.log("correct" + i + ", " + j, it);
               keyResults[it.value] = it.status;
             } else if (
               it.status === "present" &&
               keyResults[it.value] === "absent"
             ) {
-              console.log("present" + i + ", " + j, it);
+              // console.log("present" + i + ", " + j, it);
               keyResults[it.value] = it.status;
             }
           }
         } else {
-          console.log("new" + i + ", " + j, it);
+          // console.log("new" + i + ", " + j, it);
           keyResults[it.value] = it.status;
         }
       });
