@@ -1,4 +1,3 @@
-
 const Header = ({ toggleEZMode, EZMode }) => {
     return (
         <div className="header">

@@ -74,6 +74,10 @@ div {
   font-size: 20px;
 }
 
+.HARD .header .ttl{
+  color: #fff;
+}
+
 .header .menuLst {
   display: inline-flex;
   margin-right: 10px;
@@ -88,27 +92,27 @@ div {
   cursor: pointer;
 }
 
+.HARD .header .menuLst .menu{
+  color: #fff;
+}
+
 .header .menuLst .icon {
   background-size: 26px;
   background-position: center;
   background-repeat: no-repeat;
 }
 
-.icon.create {
-  background-image: url(/src/img/test.png);
-}
+.icon.create {background-image: url(/src/img/test.png);}
+.HARD .icon.create {background-image: url(/src/img/test_white.png);}
 
-.icon.setting {
-  background-image: url(/src/img/setting.png);
-}
+.icon.setting {background-image: url(/src/img/setting.png);}
+.HARD .icon.setting {background-image: url(/src/img/setting_white.png);}
 
-.icon.question {
-  background-image: url(/src/img/question.png);
-}
+.icon.question {background-image: url(/src/img/question.png);}
+.HARD .icon.question {background-image: url(/src/img/question_white.png);}
 
-.icon.chart {
-  background-image: url(/src/img/chart.png);
-}
+.icon.chart {background-image: url(/src/img/chart.png);}
+.HARD .icon.chart {background-image: url(/src/img/chart_white.png);}
 
 
 /* 입력란 */
@@ -148,6 +152,12 @@ div {
 
 .charItem.active {
   border: 2px solid #000;
+}
+
+.HARD .charItem.active{
+  border: 2px solid #e2e8f0;
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.5);
 }
 
 .charItem.correct, .keyboardBtn.correct {
@@ -312,7 +322,6 @@ div {
   display: inline-block;
   width: 100%;
   height: 100vh;
-  opacity: 40%;
   background-image: url("/src/img/flame2.gif");
   background-size: cover;
 }

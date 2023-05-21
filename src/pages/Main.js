@@ -48,30 +48,29 @@ const Main = () => {
             data: localGuesses,
         });
     }, []);
-  
-  useEffect(() => {
-    const localGameState = JSON.parse(localStorage.getItem("gameState"))
-        ? JSON.parse(localStorage.getItem("gameState"))
-        : [];
-    localGameState.guesses = values.guesses;
-    localStorage.setItem("gameState", JSON.stringify(localGameState));
-    
-    const resultType = enterGuess(values.guesses.at(-1));
-    // 게임 성공일 경우
-    if (resultType === "CORRECT") {
-        dispatch({ type: "CORRECT" });
-        handleGuessResultMsg(resultType);
-    }
-    // 게임 실패일 경우
-    if (resultType === "WRONG") {
-      if (values.guesses.length === 6) {
-        handleGuessResultMsg("FAIL");
-      } else { 
-        handleGuessResultMsg(resultType);
-      }
-    }
 
-  }, [values.guesses]);
+    useEffect(() => {
+        const localGameState = JSON.parse(localStorage.getItem("gameState"))
+            ? JSON.parse(localStorage.getItem("gameState"))
+            : [];
+        localGameState.guesses = values.guesses;
+        localStorage.setItem("gameState", JSON.stringify(localGameState));
+
+        const resultType = enterGuess(values.guesses.at(-1));
+        // 게임 성공일 경우
+        if (resultType === "CORRECT") {
+            dispatch({ type: "CORRECT" });
+            handleGuessResultMsg(resultType);
+        }
+        // 게임 실패일 경우
+        if (resultType === "WRONG") {
+            if (values.guesses.length === 6) {
+                handleGuessResultMsg("FAIL");
+            } else {
+                handleGuessResultMsg(resultType);
+            }
+        }
+    }, [values.guesses]);
 
     const onChangeUserInput = useCallback(
         (key) => {
@@ -81,19 +80,19 @@ const Main = () => {
             else if (key === "Enter") {
                 const guessResult = enterGuess(values.currentGuess);
                 if (guessResult !== "NOT_ENOUGH") {
-                  dispatch({ type: "INSERT_GUESSES" });
-                  dispatch({ type: "INITIALIZE_CURRENT" });
-                  
-                  // 게임 실패일 경우 - 통계 업데이트(failed)
-                  if (values.guesses.length === 5 && !values.EZMode) {
-                    setLocalGameStatistics(false);
-                  }
-                  // 게임 성공일 경우 - 통계 업데이트(correct)
-                  if (guessResult === "CORRECT" && !values.EZMode) {
-                    setLocalGameStatistics(true);
-                  }
-              }
-              handleGuessResultMsg(guessResult);
+                    dispatch({ type: "INSERT_GUESSES" });
+                    dispatch({ type: "INITIALIZE_CURRENT" });
+
+                    // 게임 실패일 경우 - 통계 업데이트(failed)
+                    if (values.guesses.length === 5 && !values.EZMode) {
+                        setLocalGameStatistics(false);
+                    }
+                    // 게임 성공일 경우 - 통계 업데이트(correct)
+                    if (guessResult === "CORRECT" && !values.EZMode) {
+                        setLocalGameStatistics(true);
+                    }
+                }
+                handleGuessResultMsg(guessResult);
             } else {
                 dispatch({ type: "KEY_INPUT", key: key });
             }
@@ -114,25 +113,25 @@ const Main = () => {
                 }, 1500);
                 break;
             case "FAIL":
-              setShowAlertMsg(true);
-              setAlertMsgInfo({
-                  message: `실패했습니다. 오늘의 정답은 "${getTodayAnswerAssembled()}" 입니다.`,
-                  isSuccess: false,
-              });
-              setTimeout(() => {
-                  setShowAlertMsg(false);
-              }, 1500);
-              break;
+                setShowAlertMsg(true);
+                setAlertMsgInfo({
+                    message: `실패했습니다. 오늘의 정답은 "${getTodayAnswerAssembled()}" 입니다.`,
+                    isSuccess: false,
+                });
+                setTimeout(() => {
+                    setShowAlertMsg(false);
+                }, 1500);
+                break;
             case "WRONG":
-                    setShowAlertMsg(true);
-                    setAlertMsgInfo({
-                        message: "틀렸습니다! 다시 시도 해보세요",
-                        isSuccess: false,
-                    });
-                    setTimeout(() => {
-                        setShowAlertMsg(false);
-                    }, 1500);
-            
+                setShowAlertMsg(true);
+                setAlertMsgInfo({
+                    message: "틀렸습니다! 다시 시도 해보세요",
+                    isSuccess: false,
+                });
+                setTimeout(() => {
+                    setShowAlertMsg(false);
+                }, 1500);
+
                 if (values.EZMode) dispatch({ type: "SPLICE_GUESSES" });
                 break;
             case "CORRECT":
@@ -170,7 +169,6 @@ const Main = () => {
         },
         [onChangeUserInput]
     );
-
 
     useEffect(() => {
         document.addEventListener("keyup", handleKeyUp);
@@ -210,11 +208,11 @@ const Main = () => {
     };
 
     return (
-        <div class="backgroundWrap">
+        <div
+            class={["backgroundWrap", values.EZMode ? "EZ" : "HARD"].join(" ")}
+        >
             <Background mode={values.EZMode} />
             <div className="playBoard">
-                {/* {flame()} */}
-                {/* {flame2()} */}
                 {showAlertMsg ? (
                     <AlertPopup
                         alertMsg={alertMsgInfo.message}
