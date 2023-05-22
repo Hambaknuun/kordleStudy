@@ -174,7 +174,7 @@ const Main = () => {
 
     useEffect(() => {
         document.addEventListener("keyup", handleKeyUp);
-        if (values.isCorrect)
+        if (values.isCorrect || (values.EZMode && values.guesses.length === 6))
             document.removeEventListener("keyup", handleKeyUp);
         return () => {
             document.removeEventListener("keyup", handleKeyUp);
