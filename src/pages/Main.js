@@ -2,6 +2,7 @@ import Header from "../components/Header";
 import Input from "../components/Input";
 import Keyboard from "../components/Keyboard";
 import Background from "./Background";
+import ResultPopup from "../popups/Result";
 import React, { useEffect, useState, useCallback, useReducer } from "react";
 import { maxTrialCount } from "../constants/Const";
 import { initialState, reducer } from "../reducer/reducer";
@@ -34,6 +35,8 @@ const Main = () => {
         message: "",
         isSuccess: false,
     });
+    const [showResultPopup, setShowResultPopup] = useState(true);
+    const [gameResult, setGameResult] = useState(null);
 
     useEffect(() => {
         checkAndCreateGameState();
@@ -47,6 +50,9 @@ const Main = () => {
             type: "INITIALIZE_GUESSES_LOCALSTORAGE",
             data: localGuesses,
         });
+
+        const gameStats = JSON.parse(localStorage?.getItem("gameStats"));
+        setGameResult(gameStats);
     }, []);
 
     useEffect(() => {
@@ -70,6 +76,9 @@ const Main = () => {
                 handleGuessResultMsg(resultType);
             }
         }
+
+        const gameStats = JSON.parse(localStorage?.getItem("gameStats"));
+        setGameResult(gameStats);
     }, [values.guesses]);
 
     const onChangeUserInput = useCallback(
@@ -209,9 +218,12 @@ const Main = () => {
 
     return (
         <div
-            class={["backgroundWrap", values.EZMode ? "EZ" : "HARD"].join(" ")}
+            className={["backgroundWrap", values.EZMode ? "EZ" : "HARD"].join(
+                " "
+            )}
         >
             <Background mode={values.EZMode} />
+            {showResultPopup && <ResultPopup gameResult={gameResult} />}
             <div className="playBoard">
                 {showAlertMsg ? (
                     <AlertPopup

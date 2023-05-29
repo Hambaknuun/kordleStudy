@@ -26,18 +26,18 @@ const blossomLeaf = () => {
 
 const flame = () => {
     return (
-        <div class="backgroundWrap">
-            <div class="flame bottom"></div>
-            <div class="flame left"></div>
-            <div class="flame right"></div>
+        <div className="backgroundWrap">
+            <div className="flame bottom"></div>
+            <div className="flame left"></div>
+            <div className="flame right"></div>
         </div>
     );
 };
 
 const flame2 = () => {
     return (
-        <div class="backgroundWrap">
-            <div class="flame2"></div>
+        <div className="backgroundWrap">
+            <div className="flame2"></div>
         </div>
     );
 };

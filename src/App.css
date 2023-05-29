@@ -8,16 +8,7 @@
 }
 
 /* reset */
-div,
-a,
-span,
-menu,
-ul,
-li,
-h1,
-h2,
-h3,
-article {
+div,a,span,menu,ul,li,dl,dt,dd,h1,h2,h3,article {
   display: inline-block;
   margin: 0;
   padding: 0;
@@ -245,6 +236,94 @@ div {
 
 .alertPopup.success{
   background-color: #cdf9ca;
+}
+
+/* 통계팝업 */
+.backgroundBlack{
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: rgba(40, 40, 40, 0.7);
+  z-index: 200;
+}
+
+.resultPopup{
+  position: relative;
+  display: inline-block;
+  min-width: 350px;
+  padding: 24px;
+  font-size: 14px;
+  border-radius: 15px;
+  background-color: #fff;
+}
+
+.resultPopup .closePopBtn{
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.resultPopup .subTitle{
+  display: inline-block;
+  width: 100%;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.resultPopup .article{
+  display: inline-block;
+  width: 100%;
+}
+
+.resultPopup .article:not(:last-of-type) {
+  margin-bottom: 26px;
+}
+
+.statics .staticContents{
+  display: inline-flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.statics .staticContents dl{
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.statics .staticContents dd{
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 3px;
+}
+
+.graph .graphContents{
+  display: inline-block;
+  width: 100%;
+}
+
+.graph .graphList{
+  display: inline-flex;
+  width: 100%;
+  height: 22px;
+  margin-bottom: 10px;
+}
+
+.graph .graphList dt{
+  margin-right: 10px;
+}
+
+.graph .graphList dd{
+  display: inline-block;
+  width: var(--graph-width);
+  min-width: 5%;
+  color: #fff;
+  background-color: #2563eb;
+  border-radius: 100px;
 }
 
 /* 배경 */
