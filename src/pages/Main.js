@@ -35,7 +35,7 @@ const Main = () => {
         message: "",
         isSuccess: false,
     });
-    const [showResultPopup, setShowResultPopup] = useState(true);
+    const [showResultPopup, setShowResultPopup] = useState(false);
     const [gameResult, setGameResult] = useState(null);
 
     useEffect(() => {
@@ -67,11 +67,13 @@ const Main = () => {
         if (resultType === "CORRECT") {
             dispatch({ type: "CORRECT" });
             handleGuessResultMsg(resultType);
+            setShowResultPopup(true);
         }
         // 게임 실패일 경우
         if (resultType === "WRONG") {
             if (values.guesses.length === 6) {
                 handleGuessResultMsg("FAIL");
+                setShowResultPopup(true);
             } else {
                 handleGuessResultMsg(resultType);
             }
@@ -190,8 +192,9 @@ const Main = () => {
 
     const inputs = () => {
         const result = [];
-        values.guesses.map((it) => {
-            result.push(<Input guess={it} status={"past"} />);
+        console.log(values.guesses);
+        values.guesses.map((it, idx) => {
+            result.push(<Input key={idx} guess={it} status={"past"} />);
         });
         // EZ모드 Validation 추가
         if (values.EZMode || values.guesses.length < 6) {
@@ -223,7 +226,12 @@ const Main = () => {
             )}
         >
             <Background mode={values.EZMode} />
-            {showResultPopup && <ResultPopup gameResult={gameResult} />}
+            {showResultPopup && (
+                <ResultPopup
+                    gameResult={gameResult}
+                    setShowResultPopup={setShowResultPopup}
+                />
+            )}
             <div className="playBoard">
                 {showAlertMsg ? (
                     <AlertPopup

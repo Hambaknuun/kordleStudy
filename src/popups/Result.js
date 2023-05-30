@@ -1,4 +1,4 @@
-const ResultPopup = ({ gameResult }) => {
+const ResultPopup = ({ gameResult, setShowResultPopup }) => {
     console.log(gameResult);
     console.log(typeof gameResult);
     const bestStreak = gameResult?.bestStreak;
@@ -26,7 +26,14 @@ const ResultPopup = ({ gameResult }) => {
     return (
         <div className="backgroundBlack">
             <article className="resultPopup">
-                <button className="closePopBtn">닫기</button>
+                <button
+                    className="closePopBtn"
+                    onClick={() => {
+                        setShowResultPopup(false);
+                    }}
+                >
+                    닫기
+                </button>
                 <dl className="article statics">
                     <dt className="subTitle">통계</dt>
                     <dd className="staticContents">

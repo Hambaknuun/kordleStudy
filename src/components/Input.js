@@ -1,13 +1,8 @@
-import { useEffect } from "react";
-import {
-    getGuessResult
-} from "../utils/vocab";
+import { getGuessResult } from "../utils/vocab";
 
 const CharBox = ({ val, type }) => {
-    const charBoxClass = type ? type : (val ? "active" : "");
-    return (
-        <div className={["charItem", charBoxClass].join(" ")}>{val}</div>
-    );
+    const charBoxClass = type ? type : val ? "active" : "";
+    return <div className={["charItem", charBoxClass].join(" ")}>{val}</div>;
 };
 
 const Input = ({ guess, status }) => {
@@ -24,20 +19,19 @@ const Input = ({ guess, status }) => {
     }
     function generateCharBoxPast(guessResult) {
         let arr = [];
-        guessResult.map((it, idx)=>{
-            arr.push(<CharBox key={idx} val={it.value} type={it.status}/>);
+        guessResult.map((it, idx) => {
+            arr.push(<CharBox key={idx} val={it.value} type={it.status} />);
         });
         return arr;
     }
 
-    return <div className="inputLine">
-            {
-            status==="past" ? 
-                generateCharBoxPast(getGuessResult(guess)) 
-                : 
-                inputBlock(guess)
-            }
-            </div>;
+    return (
+        <div className="inputLine">
+            {status === "past"
+                ? generateCharBoxPast(getGuessResult(guess))
+                : inputBlock(guess)}
+        </div>
+    );
 };
 
 export default Input;
