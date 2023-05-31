@@ -54,7 +54,7 @@ export const checkAndCreateGameState = () => {
 // Create New Game State (Local Storage)
 export const createGameState = (todayVocab) => {
   const solution = Hangul.disassemble(todayVocab);
-  const newGameState = { guesses: [], solution: solution };
+  const newGameState = { guesses: [], solution: solution, mode: "HARD" };
   localStorage.setItem("gameState", JSON.stringify(newGameState));
 };
 
@@ -63,6 +63,13 @@ const getLocalGameState = () => {
 
   if (!localGameState) return null;
   return localGameState;
+};
+export const setLocalGameStateMode = (EZModeYN) => {
+  const newGameState = {
+    ...getLocalGameState(),
+    mode: EZModeYN ? "EZ" : "HARD",
+  };
+  localStorage.setItem("gameState", JSON.stringify(newGameState));
 };
 
 export const setLocalGameStatistics = (haveWon, trial) => {
